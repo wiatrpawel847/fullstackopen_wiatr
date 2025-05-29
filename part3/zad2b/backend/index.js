@@ -1,18 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-// ---- Serwowanie statycznych plików frontendu z folderu dist ----
-const __dirname = path.resolve(); // folder backendu
-
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// --- API routes ---
 
 let persons = [
   { id: "1", name: "Arto Hellas", number: "040-123456" },
@@ -84,12 +76,7 @@ app.put('/api/persons/:id', (req, res) => {
   res.json(updatedPerson);
 });
 
-// --- Fallback dla routingu frontendowego React (tzw. SPA) ---
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
