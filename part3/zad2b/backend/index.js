@@ -83,3 +83,21 @@ const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+import express from 'express';
+import path from 'path';
+
+
+// __dirname - katalog backendu (tam gdzie jest ten plik)
+const __dirname = path.resolve();
+
+// Serwuj pliki statyczne z folderu dist (frontend build)
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Przy dowolnym innym żądaniu zwracaj index.html (dla routingu frontendowego Reacta)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+
+
